@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clinic Agenda</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background: #f4f7fb;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:30px;
+    }
+
+    .container{
+      width:100%;
+      max-width:700px;
+      background:#fff;
+      border-radius:20px;
+      padding:35px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .top{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .top h1{
+      color:#1f3c88;
+      margin-bottom:10px;
+      font-size:32px;
+    }
+
+    .top p{
+      color:#666;
+      font-size:15px;
+    }
+
+    .form-group{
+      margin-bottom:20px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      color:#333;
+      font-weight:bold;
+      font-size:14px;
+    }
+
+    input,
+    select{
+      width:100%;
+      padding:14px;
+      border:1px solid #d9d9d9;
+      border-radius:10px;
+      font-size:15px;
+      transition:0.2s;
+    }
+
+    input:focus,
+    select:focus{
+      outline:none;
+      border-color:#1f3c88;
+      box-shadow:0 0 0 4px rgba(31,60,136,0.1);
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .btn{
+      width:100%;
+      padding:15px;
+      border:none;
+      background:#1f3c88;
+      color:#fff;
+      font-size:16px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:0.2s;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    .btn:hover{
+      background:#16306d;
+    }
+
+    .success{
+      margin-top:25px;
+      background:#e8fff0;
+      border:1px solid #87d7a1;
+      padding:20px;
+      border-radius:12px;
+      display:none;
+    }
+
+    .success h3{
+      color:#1c7a3d;
+      margin-bottom:10px;
+    }
+
+    .success p{
+      color:#333;
+      line-height:1.5;
+    }
+
+    .footer{
+      margin-top:25px;
+      text-align:center;
+      color:#999;
+      font-size:13px;
+    }
+
+    @media(max-width:600px){
+      .row{
+        grid-template-columns:1fr;
+      }
+
+      .container{
+        padding:25px;
+      }
+
+      .top h1{
+        font-size:26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="top">
+      <h1>Clinic Agenda</h1>
+      <p>Sistema Simplificado de Agendamento de Consultas</p>
+    </div>
+
+    <form id="appointmentForm">
+
+      <div class="form-group">
+        <label>Nome do Paciente</label>
+        <input type="text" id="nome" placeholder="Digite o nome completo" required>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+        </div>
+
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="email" placeholder="email@exemplo.com" required>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="form-group">
+          <label>Especialidade</label>
+          <select id="especialidade" required>
+            <option value="">Selecione</option>
+            <option>Clínico Geral</option>
+            <option>Pediatria</option>
+            <option>Cardiologia</option>
+            <option>Dermatologia</option>
+            <option>Ortopedia</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Profissional</label>
+          <select id="medico" required>
+            <option value="">Selecione</option>
+            <option>Dr. Carlos Silva</option>
+            <option>Dra. Fernanda Souza</option>
+            <option>Dr. Rafael Lima</option>
+            <option>Dra. Juliana Rocha</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="form-group">
+          <label>Data da Consulta</label>
+          <input type="date" id="data" required>
+        </div>
+
+        <div class="form-group">
+          <label>Horário</label>
+          <select id="horario" required>
+            <option value="">Selecione</option>
+            <option>08:00</option>
+            <option>09:00</option>
+            <option>10:00</option>
+            <option>11:00</option>
+            <option>14:00</option>
+            <option>15:00</option>
+            <option>16:00</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button type="submit" class="btn">
+        Confirmar Agendamento
+      </button>
+
+    </form>
+
+    <div class="success" id="successBox">
+      <h3>Agendamento realizado com sucesso!</h3>
+
+      <p id="confirmationText"></p>
+    </div>
+
+    <div class="footer">
+      Projeto acadêmico — Sistema Web Simplificado
+    </div>
+
+  </div>
+
+  <script>
+
+    const form = document.getElementById('appointmentForm');
+    const successBox = document.getElementById('successBox');
+    const confirmationText = document.getElementById('confirmationText');
+
+    form.addEventListener('submit', function(event){
+
+      event.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const telefone = document.getElementById('telefone').value;
+      const email = document.getElementById('email').value;
+      const especialidade = document.getElementById('especialidade').value;
+      const medico = document.getElementById('medico').value;
+      const data = document.getElementById('data').value;
+      const horario = document.getElementById('horario').value;
+
+      confirmationText.innerHTML = `
+        <strong>Paciente:</strong> ${nome}<br><br>
+        <strong>Telefone:</strong> ${telefone}<br><br>
+        <strong>E-mail:</strong> ${email}<br><br>
+        <strong>Especialidade:</strong> ${especialidade}<br><br>
+        <strong>Profissional:</strong> ${medico}<br><br>
+        <strong>Data:</strong> ${data}<br><br>
+        <strong>Horário:</strong> ${horario}
+      `;
+
+      successBox.style.display = 'block';
+
+      form.reset();
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
