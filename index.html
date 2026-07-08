@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ponto de Equilíbrio | Agenda pública</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" class="icon-sprite">
+      <symbol id="icon-calendar" viewBox="0 0 24 24">
+        <path d="M8 2v4M16 2v4M3.5 9.5h17M5 4.5h14a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2Z" />
+      </symbol>
+      <symbol id="icon-lock" viewBox="0 0 24 24">
+        <path d="M7 10V8a5 5 0 0 1 10 0v2M6.5 10h11a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 17.5 20h-11A1.5 1.5 0 0 1 5 18.5v-7A1.5 1.5 0 0 1 6.5 10Z" />
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14" />
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24">
+        <path d="M4 7h16M10 11v6M14 11v6M6 7l1 14h10l1-14M9 7V4h6v3" />
+      </symbol>
+      <symbol id="icon-google" viewBox="0 0 24 24">
+        <path d="M21 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5a4.4 4.4 0 0 1-1.8 2.8v2.4h3a9 9 0 0 0 2.8-6.9Z" />
+        <path d="M12 21a8.8 8.8 0 0 0 6.2-2.3l-3-2.4A5.6 5.6 0 0 1 3.7 13H.6v2.5A9.4 9.4 0 0 0 12 21Z" />
+        <path d="M3.7 13a5.7 5.7 0 0 1 0-3.8V6.7H.6a9.1 9.1 0 0 0 0 8.8L3.7 13Z" />
+        <path d="M12 6.4a5 5 0 0 1 3.5 1.4l2.7-2.6A8.8 8.8 0 0 0 12 3 9.4 9.4 0 0 0 .6 6.7l3.1 2.5A5.6 5.6 0 0 1 12 6.4Z" />
+      </symbol>
+      <symbol id="icon-download" viewBox="0 0 24 24">
+        <path d="M12 3v12M7 10l5 5 5-5M4 19h16" />
+      </symbol>
+      <symbol id="icon-chevron-left" viewBox="0 0 24 24">
+        <path d="m15 18-6-6 6-6" />
+      </symbol>
+      <symbol id="icon-chevron-right" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+    </svg>
+
+    <header class="topbar">
+      <div class="brand">
+        <img src="assets/logo-ponto-equilibrio.png" alt="Ponto de Equilíbrio" />
+        <div>
+          <p class="eyebrow">Ponto de Equilíbrio</p>
+          <h1>Agenda pública da sala</h1>
+        </div>
+      </div>
+
+      <div class="admin-box">
+        <span id="adminStatus" class="status-pill">Público</span>
+        <input id="adminPin" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN admin" aria-label="PIN admin" />
+        <button id="adminButton" class="icon-button labelled" type="button" title="Ativar modo admin">
+          <svg><use href="#icon-lock"></use></svg>
+          <span>Admin</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="side-panel" aria-label="Reserva">
+        <section class="booking-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Reserva</p>
+              <h2 id="formTitle">Novo horário</h2>
+            </div>
+            <button id="clearButton" class="icon-button" type="button" title="Limpar seleção">
+              <svg><use href="#icon-plus"></use></svg>
+            </button>
+          </div>
+
+          <p id="slotMessage" class="slot-message">Selecione um horário livre na agenda.</p>
+
+          <form id="bookingForm" class="booking-form">
+            <label>
+              <span>Data</span>
+              <input id="dateInput" name="date" type="date" required />
+            </label>
+
+            <div class="two-columns">
+              <label>
+                <span>Horário</span>
+                <select id="timeInput" name="time" required></select>
+              </label>
+              <label>
+                <span>Duração</span>
+                <select id="durationInput" name="duration" required>
+                  <option value="60">1 hora</option>
+                  <option value="90">1h30</option>
+                  <option value="120">2 horas</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span>Profissional</span>
+              <input id="professionalInput" name="professional" type="text" maxlength="80" placeholder="Nome completo" required />
+            </label>
+
+            <label>
+              <span>Nome do cliente</span>
+              <input id="customerInput" name="customer" type="text" maxlength="80" placeholder="Nome do cliente" required />
+            </label>
+
+            <fieldset class="choice-group">
+              <legend>Selecione sua sala</legend>
+              <div class="choice-options room-options">
+                <label class="choice-card">
+                  <input type="radio" name="roomNumber" value="1" checked required />
+                  <span>Sala 1</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="roomNumber" value="2" required />
+                  <span>Sala 2</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="roomNumber" value="3" required />
+                  <span>Sala 3</span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="roomNumber" value="4" required />
+                  <span>Sala 4</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="choice-group">
+              <legend>Tipo de agendamento</legend>
+              <div class="choice-options booking-type-options">
+                <label class="choice-card type-ponto">
+                  <input type="radio" name="bookingType" value="ponto" checked required />
+                  <span>Profissional da Ponto</span>
+                </label>
+                <label class="choice-card type-coworking">
+                  <input type="radio" name="bookingType" value="coworking" required />
+                  <span>Coworking</span>
+                </label>
+                <label class="choice-card type-salao">
+                  <input type="radio" name="bookingType" value="salao" required />
+                  <span>Sal&atilde;o</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <label>
+              <span>Especialidade</span>
+              <select id="specialtyInput" name="specialty" required>
+                <option value="">Selecione</option>
+                <option>Estética avançada</option>
+                <option>Massoterapia</option>
+                <option>Psicologia</option>
+                <option>Fisioterapia</option>
+                <option>Nutrição</option>
+                <option>Outra especialidade</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Observação interna</span>
+              <textarea id="notesInput" name="notes" maxlength="180" placeholder="Opcional"></textarea>
+            </label>
+
+            <div class="action-row">
+              <button id="saveButton" class="primary-button" type="submit">
+                <svg><use href="#icon-calendar"></use></svg>
+                <span>Reservar horário</span>
+              </button>
+              <button id="deleteButton" class="danger-button" type="button">
+                <svg><use href="#icon-trash"></use></svg>
+                <span>Excluir</span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="google-panel">
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Google</p>
+              <h2>Agenda do dono</h2>
+            </div>
+            <svg class="panel-icon"><use href="#icon-google"></use></svg>
+          </div>
+
+          <label>
+            <span>Agenda fixa do dono</span>
+            <input id="ownerEmailInput" type="email" value="contato.dequilibrio@gmail.com" readonly />
+          </label>
+          <label>
+            <span>Nome da sala</span>
+            <input id="roomInput" type="text" maxlength="70" value="Sala Ponto de Equilíbrio" />
+          </label>
+          <p id="integrationNotice" class="integration-notice">
+            Obrigatório: depois de reservar, clique em Abrir no Google e salve o evento na agenda contato.dequilibrio@gmail.com.
+          </p>
+          <button id="saveGoogleButton" class="secondary-button" type="button">Salvar nome da sala</button>
+
+          <div class="google-actions">
+            <button id="openGoogleButton" class="secondary-button" type="button">
+              <svg><use href="#icon-google"></use></svg>
+              <span>Abrir no Google</span>
+            </button>
+            <button id="downloadIcsButton" class="secondary-button" type="button">
+              <svg><use href="#icon-download"></use></svg>
+              <span>Baixar .ics</span>
+            </button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="calendar-panel" aria-label="Agenda pública">
+        <div class="calendar-toolbar">
+          <div>
+            <p class="eyebrow">Disponibilidade</p>
+            <h2 id="weekTitle">Semana</h2>
+          </div>
+
+          <div class="toolbar-controls">
+            <button id="prevWeekButton" class="icon-button" type="button" title="Semana anterior">
+              <svg><use href="#icon-chevron-left"></use></svg>
+            </button>
+            <button id="todayButton" class="secondary-button" type="button">Hoje</button>
+            <button id="nextWeekButton" class="icon-button" type="button" title="Próxima semana">
+              <svg><use href="#icon-chevron-right"></use></svg>
+            </button>
+            <input id="jumpDateInput" type="date" aria-label="Ir para data" />
+          </div>
+        </div>
+
+        <div class="legend" aria-label="Legenda">
+          <span><i class="legend-dot free"></i>Aberto</span>
+          <span><i class="legend-dot ponto"></i>Profissional da Ponto</span>
+          <span><i class="legend-dot coworking"></i>Coworking</span>
+          <span><i class="legend-dot salao"></i>Sal&atilde;o</span>
+          <span><i class="legend-dot selected"></i>Selecionado</span>
+        </div>
+
+        <div class="calendar-scroll">
+          <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Horários disponíveis"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
