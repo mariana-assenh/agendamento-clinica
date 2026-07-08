@@ -425,12 +425,19 @@ input[readonly] {
   color: var(--gold-dark);
   border-color: var(--line);
   background: white;
+  text-decoration: none;
 }
 
 .secondary-button:hover,
 .icon-button:hover {
   border-color: rgba(185, 157, 88, 0.6);
   background: #fff9ea;
+}
+
+.secondary-button.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  pointer-events: none;
 }
 
 .integration-notice {

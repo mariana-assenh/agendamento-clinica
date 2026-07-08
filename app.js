@@ -694,7 +694,9 @@ function getActiveBooking() {
 function updateGoogleButtons() {
   const booking = getActiveBooking();
   const hasBooking = Boolean(booking);
-  elements.openGoogleButton.disabled = !hasBooking;
+  elements.openGoogleButton.classList.toggle("is-disabled", !hasBooking);
+  elements.openGoogleButton.setAttribute("aria-disabled", String(!hasBooking));
+  elements.openGoogleButton.href = booking ? buildGoogleCalendarUrl(booking) : "#";
   elements.downloadIcsButton.disabled = !hasBooking;
 
   if (!booking) {
@@ -712,13 +714,13 @@ function updateGoogleButtons() {
   );
 }
 
-function openGoogleCalendar() {
+function openGoogleCalendar(event) {
   const booking = getActiveBooking();
   if (!booking) {
+    event.preventDefault();
     showToast("Selecione uma reserva.");
     return;
   }
-  window.open(buildGoogleCalendarUrl(booking), "_blank", "noopener,noreferrer");
   setIntegrationNotice(
     `Google aberto. Para concluir, salve o evento na agenda ${OWNER_EMAIL}.`,
     "active",
